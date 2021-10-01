@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:skeleton_loading_sample/util/styles.dart' as utils;
+
 class SingleImageCard extends StatelessWidget {
   static const int size = 300;
   const SingleImageCard({Key? key}) : super(key: key);
@@ -16,8 +18,8 @@ class SingleImageCard extends StatelessWidget {
             child: Column(
               children: const <Widget>[
                 Divider(thickness: 0.4),
-                Text('Lorem ipsum'),
-                Text('Dolor sit amet.')
+                Text('Lorem ipsum', style: utils.TextStyles.imageHeader),
+                Text('Dolor sit amet.', style: utils.TextStyles.imageBody),
               ],
             ),
           ),
