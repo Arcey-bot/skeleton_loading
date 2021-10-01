@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:skeleton_loading_sample/screen/home_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: const MyHomePage(title: 'Flutter Demo Home Page'),
+        child: HomeScreen(),
       ),
     );
   }
