@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:skeleton_loading_sample/screen/home_screen.dart';
 
+// TODO: Request list of images rather than one for variety
+// ?: Swap current stack approach, goal is look like Canvas course card
+// TODO: Then finally skeletons
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   runApp(const MyApp());
 }
 
@@ -13,12 +20,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Skeleton Loading',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Padding(
-        padding: const EdgeInsets.all(8.0),
+      home: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: HomeScreen(),
       ),
     );

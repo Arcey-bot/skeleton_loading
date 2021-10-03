@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 
 import 'package:skeleton_loading_sample/util/styles.dart' as utils;
 
-class SingleImageCard extends StatelessWidget {
-  static const int size = 300;
-  const SingleImageCard({Key? key}) : super(key: key);
+const String url = 'https://picsum.photos/325/200';
+
+class ImageCard extends StatelessWidget {
+  const ImageCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Stack(
         children: <Widget>[
-          Image.network('https://picsum.photos/$size'),
+          Image.network(
+            url,
+            fit: BoxFit.cover,
+          ),
           Positioned(
             left: 8.0,
-            bottom: size / 4,
+            bottom: 16.0,
             child: Column(
               children: const <Widget>[
-                Divider(thickness: 0.4),
                 Text('Lorem ipsum', style: utils.TextStyles.imageHeader),
+                Divider(height: 8.0),
                 Text('Dolor sit amet.', style: utils.TextStyles.imageBody),
               ],
             ),
