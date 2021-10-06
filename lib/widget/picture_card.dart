@@ -7,7 +7,6 @@ const int imageH = 200;
 const String url = 'https://picsum.photos/$imageW/$imageH';
 
 class PictureCard extends StatelessWidget {
-  bool loading = true;
   final Future<String> _url =
       Future.delayed(const Duration(seconds: 5), () => url);
 
