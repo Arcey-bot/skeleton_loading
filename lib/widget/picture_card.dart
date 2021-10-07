@@ -112,10 +112,21 @@ class _PictureOverlayLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      height: 48,
-      color: Colors.red,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+          height: utils.TextStyles.imageHeader.fontSize,
+          width: imageW + .0,
+          child: ColoredBox(color: Colors.grey[200]!),
+        ),
+        const Divider(height: 8.0),
+        SizedBox(
+          height: utils.TextStyles.imageBody.fontSize,
+          width: imageW + .0,
+          child: ColoredBox(color: Colors.grey[200]!),
+        ),
+      ],
     );
   }
 }
