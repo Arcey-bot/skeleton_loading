@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:skeleton_loading_sample/widget/picture_card.dart';
 
-const int images = 5;
-List<PictureCard> cards = List.generate(images, (index) => PictureCard());
+List<PictureCard> pictures = [PictureCard()];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,9 +12,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<PictureCard> cards = pictures;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        setState(() {
+          cards.add(PictureCard());
+        });
+      }),
       backgroundColor: Colors.grey[200],
       body: ListView.builder(
         padding: const EdgeInsets.all(32.0),

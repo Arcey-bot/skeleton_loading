@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
 
 import 'package:skeleton_loading_sample/util/styles.dart' as utils;
 
@@ -7,8 +11,8 @@ const int imageH = 200;
 const String url = 'https://picsum.photos/$imageW/$imageH';
 
 class PictureCard extends StatelessWidget {
-  final Future<String> _url =
-      Future.delayed(const Duration(seconds: 5), () => url);
+  final Future _image = Future.delayed(
+      const Duration(seconds: 5), () => http.get(Uri.parse(url)));
 
   PictureCard({Key? key}) : super(key: key);
 
@@ -19,10 +23,10 @@ class PictureCard extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
       ),
       child: FutureBuilder(
-          future: _url,
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          future: _image,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
-              return const Picture();
+              return Picture(imageBytes: snapshot.data.bodyBytes);
             }
             return const PictureSkeleton();
           }),
@@ -31,7 +35,8 @@ class PictureCard extends StatelessWidget {
 }
 
 class Picture extends StatelessWidget {
-  const Picture({Key? key}) : super(key: key);
+  final Uint8List imageBytes;
+  const Picture({Key? key, required this.imageBytes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +44,8 @@ class Picture extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(8.0)),
       child: Stack(
         children: <Widget>[
-          Image.network(
-            url.toString(),
+          Image.memory(
+            imageBytes,
             fit: BoxFit.fill,
           ),
           const Positioned(
