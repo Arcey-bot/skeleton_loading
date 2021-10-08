@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'package:skeleton_loading_sample/screen/home_screen.dart';
 
-// TODO: Request list of images rather than one for variety
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);

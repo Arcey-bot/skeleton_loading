@@ -12,7 +12,7 @@ const String url = 'https://picsum.photos/$imageW/$imageH';
 
 class PictureCard extends StatelessWidget {
   final Future _image = Future.delayed(
-      const Duration(seconds: 5), () => http.get(Uri.parse(url)));
+      const Duration(seconds: 3), () => http.get(Uri.parse(url)));
 
   PictureCard({Key? key}) : super(key: key);
 
@@ -25,10 +25,19 @@ class PictureCard extends StatelessWidget {
       child: FutureBuilder(
           future: _image,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            Widget child;
             if (snapshot.hasData) {
-              return Picture(imageBytes: snapshot.data.bodyBytes);
+              return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  child: Picture(imageBytes: snapshot.data.bodyBytes));
             }
-            return const PictureSkeleton();
+            return const AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
+                switchOutCurve: Curves.easeOutSine,
+                child: PictureSkeleton());
+
+            // return AnimatedSwitcher(
+            //     duration: const Duration(seconds: 4), child: child);
           }),
     );
   }
@@ -125,7 +134,10 @@ class _PictureOverlayLoading extends StatelessWidget {
           width: imageW + .0,
           child: ColoredBox(color: Colors.grey[200]!),
         ),
-        const Divider(height: 8.0),
+        const Divider(
+          height: 8.0,
+          color: Colors.transparent,
+        ),
         SizedBox(
           height: utils.TextStyles.imageBody.fontSize,
           width: imageW + .0,
