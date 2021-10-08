@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:shimmer/shimmer.dart';
 
 import 'package:skeleton_loading_sample/util/styles.dart' as utils;
 
@@ -12,7 +13,7 @@ const String url = 'https://picsum.photos/$imageW/$imageH';
 
 class PictureCard extends StatelessWidget {
   final Future _image = Future.delayed(
-      const Duration(seconds: 3), () => http.get(Uri.parse(url)));
+      const Duration(seconds: 5), () => http.get(Uri.parse(url)));
 
   PictureCard({Key? key}) : super(key: key);
 
@@ -25,19 +26,16 @@ class PictureCard extends StatelessWidget {
       child: FutureBuilder(
           future: _image,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            Widget child;
             if (snapshot.hasData) {
               return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
+                  switchInCurve: Curves.easeInSine,
                   child: Picture(imageBytes: snapshot.data.bodyBytes));
             }
             return const AnimatedSwitcher(
                 duration: Duration(milliseconds: 500),
                 switchOutCurve: Curves.easeOutSine,
                 child: PictureSkeleton());
-
-            // return AnimatedSwitcher(
-            //     duration: const Duration(seconds: 4), child: child);
           }),
     );
   }
@@ -81,12 +79,17 @@ class PictureSkeleton extends StatelessWidget {
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(8.0)),
       child: Stack(
-        children: const <Widget>[
-          SizedBox(
-            width: imageW + .0,
-            height: imageH + .0,
+        children: <Widget>[
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: imageW + .0,
+              height: imageH + .0,
+              color: Colors.grey[300],
+            ),
           ),
-          Positioned(
+          const Positioned(
             left: 0.0,
             right: 0.0,
             bottom: 0.0,
@@ -115,7 +118,11 @@ class PictureOverlay extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: (title != null && body != null)
             ? _PictureOverlayLoaded(title: title, body: body)
-            : const _PictureOverlayLoading(),
+            : Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: const _PictureOverlayLoading(),
+              ),
       ),
     );
   }
