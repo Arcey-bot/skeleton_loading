@@ -3,7 +3,7 @@
     <!-- Required to fetch data from the internet. -->
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="skeleton_loading_sample"
+        android:label="Skeleton Loading"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
